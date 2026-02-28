@@ -34,8 +34,26 @@ func getbooks(c *gin.Context){
 //a post req or handler ,note that all the data 
 // that the route will be receiving will be 
 // stored inside the c
+
+// the use of the c.BindJSON(&newBook)
+// This is very important. it Reads JSON from request body
+//  Matches JSON fields to struct tags 
+// Stores values in newBook
 func createBook(c *gin.Context){
-	var newbook book
+	// lets get the book data and create a new var 
+	// to store the new data into it and should be 
+	// of the type book
+	//  &newBook The & means:Pass the memory address so Gin can fill the data.
+	var newBook book
+
+	// error checking
+	
+	if err := c.BindJSON(&newBook); err != nil {
+		return
+	}
+	books =	append(books,newBook)
+	c.IndentedJSON(http.StatusCreated,newBook)
+
 
 	
 }
@@ -43,7 +61,8 @@ func createBook(c *gin.Context){
 func main() {
 	router := gin.Default()
 	router.GET("/books",getbooks)
-	router.Run("localhost:8989")
+	router.POST("/books",createBook)
+	router.Run("localhost:8055")
 }
 
 
