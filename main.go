@@ -1,14 +1,13 @@
-pakage main
+package main
 
-
-////we will be working on an api that will be able to 
-////store ,retrieve and change data 
-
+////we will be working on an api that will be able to
+////store ,retrieve and change data
 
 import (
 	"net/http"
+
 	"github.com/gin-gonic/gin"
-	"errors"
+	//"errors"
 )
 
 
@@ -27,10 +26,25 @@ var books = []book{
     {ID: "3", Title: "Clean Code", Author: "Robert C. Martin", Quantity: 2},
 }
 
+//
+func getbooks(c *gin.Context){
+	c.IndentedJSON(http.StatusOK,books)
+
+}
+//a post req or handler ,note that all the data 
+// that the route will be receiving will be 
+// stored inside the c
+func createBook(c *gin.Context){
+	var newbook book
+
+	
+}
+
 func main() {
 	router := gin.Default()
-	router.Get("/books",getbooks)
-	get.Run("localhost:8989")
+	router.GET("/books",getbooks)
+	router.Run("localhost:8989")
 }
+
 
 
